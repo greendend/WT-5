@@ -1,14 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.FileNotFoundException;
 
 
 public class Main {
@@ -28,11 +23,67 @@ public class Main {
         Book book = new Book();
         ArrayList<Book> booklist = new ArrayList<>();
 
-        String fileName = "books.txt";
-        //String contents = readUsingFiles(fileName);
+        //чтение файла!
+        try {
+            File file = new File("E:\\Учеба\\WT-5[Library]\\books.txt");
+            //создаем объект FileReader для объекта File
+            FileReader fr = new FileReader(file);
+            //создаем BufferedReader с существующего FileReader для построчного считывания
+            BufferedReader reader = new BufferedReader(fr);
+            // считаем сначала первую строку
+            String line = reader.readLine();
+            String s = line;
+            while (line != null) {
+                //System.out.println(line);
+                // считываем остальные строки в цикле
+                line = reader.readLine();
+                s = s + line;
+            }
+            //System.out.println(s);
+            //заполняем библиотеку книгами
+            line = "";
+            String word = "";
+            int h = 1;
+            for (int i = 0; i < s.length(); i++) {
+                line = line + s.charAt(i);
+                while (s.charAt(i) == '|') {
+                    for (int j = 0; j < line.length(); j++){
+                        word = word + line.charAt(j);
+                        while (line.charAt(j) == '/') { //сюда докинуть ещё чек на конец структуры
+                            if (h == 1) {
+                                book.name = word;
+                                h++;
+                                word = "";
+                                break;
+                            } else if (h == 2) {
+                                book.author = word;
+                                h++;
+                                word = "";
+                                break;
+                            } else if (h == 3) {
+                                book.pagecount = Integer.parseInt(word);
+                                h = 1;
+                                word = "";
+                                line = "";
+                                booklist.add(book);
+                                book = null;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            System.out.println(book.name);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
 
+        //выбор действия!
         switch (num) {
             case (1):
                 System.out.print("Переход к коду 1\n");
@@ -79,9 +130,5 @@ public class Main {
                 }
                 break;
         }
-    }
-
-    private static String readUsingFiles(String fileName) throws IOException {
-        return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 }
