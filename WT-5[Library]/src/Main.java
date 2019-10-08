@@ -9,19 +9,11 @@ import java.io.FileNotFoundException;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        System.out.print("1. Просмотр книг библиотеки\n2. Мои книги\n3. Просмотр авторов\n4. Подарить книгу библиотеке\n");
-        System.out.print("Введите номер действия: ");
 
-        int num = in.nextInt();
-        while ((num < 1) || (num > 4)) {
-            System.out.print("Неправильный ввод\n");
-            System.out.print("Введите номер действия: ");
-            num = in.nextInt();
-        }
-
+        Human human = new Human();
+        Library library = new Library();
         Book book = new Book();
-        ArrayList<Book> booklist = new ArrayList<>();
+        //ArrayList<Book> booklist = new ArrayList<>();
 
         //чтение файла!
         try {
@@ -68,7 +60,8 @@ public class Main {
                                 h = 1;
                                 word = "";
                                 line = "";
-                                booklist.add(books);
+                                //booklist.add(books);
+                                library.addBook(books);
                                 break;
                             }
                         }
@@ -85,68 +78,109 @@ public class Main {
         }
 
         //вывод списка всех книг из ArrayList
-        for (int i = 0; i < booklist.size(); i++)
-            System.out.println(i + ". " + booklist.get(i).name + " | " + booklist.get(i).author + " | " + booklist.get(i).pagecount);
+        //for (int i = 0; i < booklist.size(); i++)
+        //    System.out.println(i + ". " + booklist.get(i).name + " | " + booklist.get(i).author + " | " + booklist.get(i).pagecount);
+
+        //for (int i = 0; i < library.bookList.size(); i++)
+        //    System.out.println(i + ". " + library.bookList.get(i).name + " | " + library.bookList.get(i).author + " | " + library.bookList.get(i).pagecount);
 
 
         //выбор действия!
-        switch (num) {
-            case (1):
-                System.out.print("Переход к коду 1\n"); //книги библиотеки
-                //book.displayInfo();
-                //1. просмотр
-                    //2. взять книгу
-                    //3. вернуть книгу
-                    //4. сортировка
-                break;
-            case (2):
-                System.out.print("Переход к коду 2\n"); //мои книги
-                //1. просмотр
-                    //2. сортировка
-                break;
-            case (3):
-                System.out.print("Переход к коду 3\n"); // авторы
-                //1. просмотр
-                    //2. сортировка
-                    //3. просмотр книг принадлежащих автору
-                break;
-            case (4):
-                System.out.print("Переход к коду 4\n"); //создание книги
+        while (true) {
+            Scanner in = new Scanner(System.in);
+            System.out.print("1. Просмотр книг библиотеки\n2. Мои книги\n3. Просмотр авторов\n4. Подарить книгу библиотеке\n");
+            System.out.print("Введите номер действия: ");
 
-                System.out.print("1. Подарить книгу библиотеке\n");
-                System.out.print("2. Вернуться\n");
-                boolean f = false;
-                while ((num < 1) || (num > 2)) {
-                    if (f)
-                        System.out.print("Неправильный ввод\n");
-                    f = true;
+            int num = in.nextInt();
+            while ((num < 1) || (num > 4)) {
+                System.out.print("Неправильный ввод\n");
+                System.out.print("Введите номер действия: ");
+                num = in.nextInt();
+            }
+
+            switch (num) {
+                case (1):
+                    System.out.print("Переход к коду 1\n---------------------------------\n"); //книги библиотеки
+                    for (int i = 0; i < library.bookList.size(); i++)
+                        System.out.println(i + ". " + library.bookList.get(i).name + " | " + library.bookList.get(i).author + " | " + library.bookList.get(i).pagecount);
+                    System.out.print("---------------------------------\n");
+                    System.out.print("1. Взять книгу\n2. Сортировать по названию (А-Я)\n3. Сортировать по автору (А-Я)\n4. Сортировать по кол-ву страниц (по возр.)\n");
                     System.out.print("Введите номер действия: ");
                     num = in.nextInt();
-                }
+                    while ((num < 1) || (num > 4)) {
+                        System.out.print("Неправильный ввод\n");
+                        System.out.print("Введите номер действия: ");
+                        num = in.nextInt();
+                    }
 
-                if (num == 2)
+
+                    switch (num) {
+                        case (1):
+                            System.out.print("Введите номер книги: ");
+                            num = in.nextInt();
+
+                            if ((num > library.bookList.size()) || (num < 0))
+                                System.out.println("Неверный номер книги");
+                            else {
+                                library.bookList.get(num);
+                                human.addBook(library.bookList.get(num));
+                                library.deleteBook(library.bookList.get(num));
+                                System.out.println("Вы взяли книгу: " + human.bookList.get(human.bookList.size() - 1).name + " | " + human.bookList.get(human.bookList.size() - 1).author + " | " + human.bookList.get(human.bookList.size() - 1).pagecount);
+                            }
+
+                            break;
+                    }
+
                     break;
+                case (2):
+                    System.out.print("Переход к коду 2\n"); //мои книги
+                    //1. просмотр
+                    //2. сортировка
+                    break;
+                case (3):
+                    System.out.print("Переход к коду 3\n"); // авторы
+                    //1. просмотр
+                    //2. сортировка
+                    //3. просмотр книг принадлежащих автору
+                    break;
+                case (4):
+                    System.out.print("Переход к коду 4\n"); //создание книги
 
-                System.out.print("Введите название книги: ");
-                in.nextLine();
-                book.name = in.nextLine();
+                    System.out.print("1. Подарить книгу библиотеке\n");
+                    System.out.print("2. Вернуться\n");
+                    boolean f = false;
+                    while ((num < 1) || (num > 2)) {
+                        if (f)
+                            System.out.print("Неправильный ввод\n");
+                        f = true;
+                        System.out.print("Введите номер действия: ");
+                        num = in.nextInt();
+                    }
 
-                System.out.print("Введите автора: ");
-                book.author = in.nextLine();
-                System.out.print("Введите кол-во страниц: ");
-                book.pagecount = in.nextInt();
+                    if (num == 2) //return
+                        break;
 
-                try(FileWriter writer = new FileWriter("books.txt", true))
-                {
-                    // запись всей строки
-                    String text = book.name + "/" + book.author + "/" + book.pagecount + "|";
-                    writer.write(text);
-                    writer.flush();
-                }
-                catch(IOException ex){
-                    System.out.println(ex.getMessage());
-                }
-                break;
+                    System.out.print("Введите название книги: ");
+                    in.nextLine();
+                    book.name = in.nextLine();
+
+                    System.out.print("Введите автора: ");
+                    book.author = in.nextLine();
+                    System.out.print("Введите кол-во страниц: ");
+                    book.pagecount = in.nextInt();
+
+                    try (FileWriter writer = new FileWriter("books.txt", true)) {
+                        // запись всей строки
+                        String text = book.name + "/" + book.author + "/" + book.pagecount + "|";
+                        writer.write(text);
+                        writer.flush();
+                    } catch (IOException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+
+                    library.addBook(book);
+                    break;
+            }
         }
     }
 }
