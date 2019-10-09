@@ -133,7 +133,12 @@ public class Main {
 
                     break;
                 case (2):
-                    System.out.print("Переход к коду 2\n"); //мои книги
+                    System.out.print("Переход к коду 2\n---------------------------------\n"); //мои книги
+                    for (int i = 0; i < human.bookList.size(); i++)
+                        System.out.println(i + ". " + human.bookList.get(i).name + " | " + human.bookList.get(i).author + " | " + human.bookList.get(i).pagecount);
+                    if (human.bookList.size() == 0)
+                        System.out.println("У вас нет книг");
+                    System.out.print("---------------------------------\n");
                     //1. просмотр
                     //2. сортировка
                     break;
