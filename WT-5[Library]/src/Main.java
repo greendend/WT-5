@@ -98,13 +98,19 @@ public class Main {
             Scanner in = new Scanner(System.in);
             System.out.print("1. Просмотр книг библиотеки\n2. Мои книги\n3. Просмотр авторов\n4. Подарить книгу библиотеке\n");
             System.out.print("Введите номер действия: ");
+            String str = in.next();
+            int num = 0;
+            while (true) {
+                if ((str.matches("[-+]?\\d+")))
+                    num = Integer.parseInt(str);
+                else
+                    System.out.print("Неправильный ввод\n");
 
-            int num = in.nextInt();
-            while ((num < 1) || (num > 4)) {
-                System.out.print("Неправильный ввод\n");
-                System.out.print("Введите номер действия: ");
-                num = in.nextInt();
+                if ((num >= 1) || (num <= 4)) {
+                    break;
+                }
             }
+
 
             switch (num) {
                 case (1):
@@ -112,10 +118,10 @@ public class Main {
                     for (int i = 0; i < library.bookList.size(); i++)
                         System.out.println(i + ". " + library.bookList.get(i).name + " | " + library.bookList.get(i).author + " | " + library.bookList.get(i).pagecount);
                     System.out.print("---------------------------------\n");
-                    System.out.print("1. Взять книгу\n2. Сортировать по названию (А-Я)\n3. Сортировать по автору (А-Я)\n4. Сортировать по кол-ву страниц (по возр.)\n5. Поиск по названию\n6. Поиск по автору\n");
+                    System.out.print("1. Взять книгу\n2. Сортировать по названию (А-Я)\n3. Сортировать по автору (А-Я)\n4. Сортировать по кол-ву страниц (по возр.)\n5. Поиск по названию\n6. Поиск по автору\n7. Вернуться\n");
                     System.out.print("Введите номер действия: ");
                     num = in.nextInt();
-                    while ((num < 1) || (num > 6)) {
+                    while ((num < 1) || (num > 7)) {
                         System.out.print("Неправильный ввод\n");
                         System.out.print("Введите номер действия: ");
                         num = in.nextInt();
@@ -164,8 +170,8 @@ public class Main {
                                     System.out.println("Найдено совпадение: " + library.bookList.get(i).name + " | " + library.bookList.get(i).author + " | " + library.bookList.get(i).pagecount);
                                 }
                             break;
-
-
+                        case (7):
+                            break;
                     }
 
                     break;
@@ -176,10 +182,10 @@ public class Main {
                     if (human.bookList.size() == 0)
                         System.out.println("У вас нет книг");
                     System.out.print("---------------------------------\n");
-                    System.out.print("1. Вернуть книгу\n2. Сортировать по названию (А-Я)\n3. Сортировать по автору (А-Я)\n4. Сортировать по кол-ву страниц (по возр.)\n");
+                    System.out.print("1. Вернуть книгу\n2. Сортировать по названию (А-Я)\n3. Сортировать по автору (А-Я)\n4. Сортировать по кол-ву страниц (по возр.)\n5. Поиск по названию\n6. Поиск по автору\n7. Вернуться\n");
                     System.out.print("Введите номер действия: ");
                     num = in.nextInt();
-                    while ((num < 1) || (num > 5)) {
+                    while ((num < 1) || (num > 7)) {
                         System.out.print("Неправильный ввод\n");
                         System.out.print("Введите номер действия: ");
                         num = in.nextInt();
@@ -227,6 +233,8 @@ public class Main {
                                 if (book.author.equals(human.bookList.get(i).author)) {
                                     System.out.println("Найдено совпадение: " + human.bookList.get(i).name + " | " + human.bookList.get(i).author + " | " + human.bookList.get(i).pagecount);
                                 }
+                            break;
+                        case (7):
                             break;
 
                     }
